@@ -1,7 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const dBModule = require("./dbModule.js");
-const Doc = require("./models/note.js");
+const Note = require("./models/note.js");
 const app = express();
 const port = 3000;
 const clientDir = __dirname + "/client";
@@ -9,18 +9,37 @@ const clientDir = __dirname + "/client";
 connectToMongo("e-notes");
 
 app.use(express.static(clientDir));
+app.use(express.urlencoded({ extended: true }));
 
-app.post("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.post("/", async (req, res) => {
+  let name = req.body.name;
+  let text = req.body.text;
 
-app.get("/exists", (req, res) => {
-  if (dBModule.searchInDBOne(req.query.name)) {
+  if (!await dBModule.searchInDBOne(Note, name)) {
+    createNote(text, name);
     res.sendStatus(200);
   } else {
     res.sendStatus(403);
   }
 });
+
+app.get("/exists", (req, res) => {
+  if (dBModule.searchInDBOne(Note, req.query.name)) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+app.get("/getNote", (req, res) => {
+  let note = dBModule.searchInDBOne(Note, req.query.name);
+  if (note) {
+    res.send(note);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 app.listen(port, () => console.log(`Example app listening on port port!`));
 
 function connectToMongo(dbName) {
@@ -33,7 +52,7 @@ function connectToMongo(dbName) {
 
 function createNote(text, name) {
   dBModule.saveToDB(
-    new Doc({
+    new Note({
       text: text,
       name: name,
     })

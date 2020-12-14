@@ -6,6 +6,8 @@ var text = "Text may be any length you wish, no padding is required.";
 
 //decrypt(encrypt(text, key), key);
 
+let outputField = document.getElementById("main");
+
 function encrypt(text, key) {
   key = aesjs.utils.utf8.toBytes(CryptoJS.MD5(key));
 
@@ -34,16 +36,41 @@ function decrypt(etext, key) {
   return decryptedText;
 }
 
-document.getElementById("input").oninput = () => {
-  encrypt(
-    document.getElementById("input").value,
-    document.getElementById("password").value
-  );
-};
+if (document.getElementById("submit")) {
+  document.getElementById("submit").onclick = () => {
+    saveNote();
+  };
+}
 
-document.getElementById("password").oninput = () => {
-  encrypt(
+function saveNote() {
+  let request = new XMLHttpRequest();
+  let name = document.getElementById("name").value;
+
+  let eNote = encrypt(
     document.getElementById("input").value,
     document.getElementById("password").value
   );
-};
+
+  request.open("POST", "/", true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  request.send(`name=${name}&text=${eNote}`);
+  request.onreadystatechange = function () {
+    if (request.status == 403) {
+      outputField.innerText = "Name already in use";
+    } else if (request.status == 200) {
+      outputField.innerText = "Saved your note securly in the cloud";
+    }
+  };
+}
+
+function getNote() {
+  fetch("/getNote?name=" + document.getElementById("getName"))
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("outPut").innerText = data.responseText;
+    });
+}
+
+document.getElementById("getSubmit").onclick = () => {
+  getNote();
+}
