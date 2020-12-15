@@ -64,13 +64,18 @@ function saveNote() {
 }
 
 function getNote() {
-  fetch("/getNote?name=" + document.getElementById("getName"))
-    .then((response) => response.text())
+  fetch("/getNote?noteName=" + document.getElementById("getName").value)
+    .then((response) => response.json())
     .then((data) => {
-      document.getElementById("outPut").innerText = data.responseText;
+      document.getElementById("outPut").innerText = decrypt(
+        data.text,
+        document.getElementById("getPass").value
+      );
     });
 }
 
-document.getElementById("getSubmit").onclick = () => {
-  getNote();
+if (document.getElementById("getSubmit")) {
+  document.getElementById("getSubmit").onclick = () => {
+    getNote();
+  };
 }

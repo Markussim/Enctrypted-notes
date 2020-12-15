@@ -15,7 +15,7 @@ app.post("/", async (req, res) => {
   let name = req.body.name;
   let text = req.body.text;
 
-  if (!await dBModule.searchInDBOne(Note, name)) {
+  if (!(await dBModule.searchInDBOne(Note, name))) {
     createNote(text, name);
     res.sendStatus(200);
   } else {
@@ -31,8 +31,9 @@ app.get("/exists", (req, res) => {
   }
 });
 
-app.get("/getNote", (req, res) => {
-  let note = dBModule.searchInDBOne(Note, req.query.name);
+app.get("/getNote", async (req, res) => {
+  console.log(req.query.noteName);
+  let note = await dBModule.searchInDBOne(Note, req.query.noteName);
   if (note) {
     res.send(note);
   } else {
