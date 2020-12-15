@@ -23,8 +23,8 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.get("/exists", (req, res) => {
-  if (dBModule.searchInDBOne(Note, req.query.name)) {
+app.get("/exists", async (req, res) => {
+  if (!await dBModule.searchInDBOne(Note, req.query.noteName)) {
     res.sendStatus(200);
   } else {
     res.sendStatus(403);

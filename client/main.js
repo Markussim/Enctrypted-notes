@@ -105,3 +105,19 @@ if (document.getElementById("getSubmit")) {
     getNote();
   };
 }
+
+if (document.getElementById("exists")) {
+  document.getElementById("name").oninput = () => {
+    fetch("/exists?noteName=" + document.getElementById("name").value).then(
+      (response) => {
+        if (response.status == 200) {
+          document.getElementById("exists").innerText = "";
+        } else if (response.status == 403) {
+          document.getElementById("exists").innerText = "Name taken";
+        } else {
+          document.getElementById("exists").innerText = "";
+        }
+      }
+    );
+  };
+}
