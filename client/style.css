@@ -98,4 +98,16 @@ input:focus {
     background-color: black;
     color: white;
   }
+
+  #noteText {
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+  }
+
+  #input {
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+  }
 }
