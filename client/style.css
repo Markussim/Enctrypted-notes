@@ -26,6 +26,10 @@ input {
   color: rgb(226, 27, 27);
 }
 
+.available {
+  color: green;
+}
+
 * {
   font-size: 50px;
   font-family: sans-serif;

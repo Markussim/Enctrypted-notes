@@ -110,16 +110,24 @@ if (document.getElementById("getSubmit")) {
 
 if (document.getElementById("exists")) {
   document.getElementById("name").oninput = () => {
-    fetch("/exists?noteName=" + document.getElementById("name").value).then(
-      (response) => {
-        if (response.status == 200) {
-          document.getElementById("exists").innerText = "";
-        } else if (response.status == 403) {
-          document.getElementById("exists").innerText = "Name taken";
-        } else {
-          document.getElementById("exists").innerText = "";
+    if (document.getElementById("name").value) {
+      fetch("/exists?noteName=" + document.getElementById("name").value).then(
+        (response) => {
+          if (response.status == 200) {
+            document.getElementById("exists").innerText = "Name is available";
+            document.getElementById("exists").className = "available";
+          } else if (response.status == 403) {
+            document.getElementById("exists").innerText = "Name taken";
+            document.getElementById("exists").className = "exists";
+          } else {
+            document.getElementById("exists").innerText = "Network error";
+            document.getElementById("exists").className = "exists";
+          }
         }
-      }
-    );
+      );
+    } else {
+      document.getElementById("exists").innerText = "Please pick a name";
+      document.getElementById("exists").className = "";
+    }
   };
 }
