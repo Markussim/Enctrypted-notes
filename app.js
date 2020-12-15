@@ -3,7 +3,7 @@ const fs = require("fs");
 const dBModule = require("./dbModule.js");
 const Note = require("./models/note.js");
 const app = express();
-const port = 3000;
+const port = 9835;
 const clientDir = __dirname + "/client";
 
 connectToMongo("e-notes");
