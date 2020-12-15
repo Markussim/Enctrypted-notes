@@ -6,13 +6,6 @@ input {
   width: 250px;
 }
 
-textarea {
-  padding: 5px;
-  width: 250px;
-  font-size: 20px;
-  text-align: left;
-}
-
 * {
   margin: 10px;
   margin-left: 3px;
@@ -22,23 +15,37 @@ textarea {
   box-shadow: 0px 0px 10px black;
   padding: 5px;
   border-radius: 5px;
+  margin: 50px;
+  font-size: 30px;
+  text-align: left;
+  line-height: 30px;
+  min-height: 300px;
 }
 
-#exists {
-  color: red;
+.exists {
+  color: rgb(226, 27, 27);
 }
-
 
 * {
   font-size: 50px;
   font-family: sans-serif;
   text-align: center;
   margin: auto;
+  margin-top: 20px;
 }
 
 #input {
-  width: 75%;
-  margin: 10px;
+  border: none;
+  box-shadow: 0px 0px 10px black;
+  border-radius: 5px;
+  margin: 50px;
+  font-size: 30px;
+  line-height: 30px;
+  padding: 5px;
+  width: 50%;
+  text-align: left;
+  resize: none;
+  height: 300px;
 }
 
 input {
@@ -49,11 +56,13 @@ input {
   border-bottom-style: hidden;
 }
 
-textarea:focus, input:focus{
+textarea:focus,
+input:focus {
   outline: none;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: black;
   opacity: 0.5; /* Firefox */
 }

@@ -90,12 +90,14 @@ function getNote() {
       } else {
         document.getElementById("outPut").innerHTML = "";
         ptag.innerText = "Wrong password";
+        ptag.className = "exists";
         document.getElementById("outPut").appendChild(ptag);
       }
     })
     .catch(() => {
       document.getElementById("outPut").innerHTML = "";
-      ptag.innerText = "Wrong password";
+      ptag.innerText = "Wrong password or name";
+      ptag.className = "exists";
       document.getElementById("outPut").appendChild(ptag);
     });
 }
