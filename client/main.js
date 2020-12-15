@@ -30,10 +30,17 @@ function decrypt(etext, key) {
   var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
   var decryptedBytes = aesCtr.decrypt(encryptedBytes);
 
-  var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
-  console.log(decryptedText);
+  var decryptedJson = JSON.parse(aesjs.utils.utf8.fromBytes(decryptedBytes));
 
-  return decryptedText;
+  let hashed = CryptoJS.MD5(decryptedJson.text).toString();
+
+  console.log(CryptoJS.MD5(decryptedJson.text).toString());
+
+  if (hashed == decryptedJson.hash) {
+    return decryptedJson.text;
+  } else {
+    return false;
+  }
 }
 
 if (document.getElementById("submit")) {
@@ -46,10 +53,12 @@ function saveNote() {
   let request = new XMLHttpRequest();
   let name = document.getElementById("name").value;
 
-  let eNote = encrypt(
-    document.getElementById("input").value,
-    document.getElementById("password").value
-  );
+  let savedJson = JSON.stringify({
+    text: document.getElementById("input").value,
+    hash: CryptoJS.MD5(document.getElementById("input").value).toString(),
+  });
+
+  let eNote = encrypt(savedJson, document.getElementById("password").value);
 
   request.open("POST", "/", true);
   request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -64,13 +73,30 @@ function saveNote() {
 }
 
 function getNote() {
+  let ptag = document.createElement("p");
+  ptag.id = "noteText";
   fetch("/getNote?noteName=" + document.getElementById("getName").value)
     .then((response) => response.json())
     .then((data) => {
-      document.getElementById("outPut").innerText = decrypt(
+      let decryptJson = decrypt(
         data.text,
         document.getElementById("getPass").value
       );
+
+      if (decryptJson) {
+        document.getElementById("outPut").innerHTML = "";
+        ptag.innerText = decryptJson;
+        document.getElementById("outPut").appendChild(ptag);
+      } else {
+        document.getElementById("outPut").innerHTML = "";
+        ptag.innerText = "Wrong password";
+        document.getElementById("outPut").appendChild(ptag);
+      }
+    })
+    .catch(() => {
+      document.getElementById("outPut").innerHTML = "";
+      ptag.innerText = "Wrong password";
+      document.getElementById("outPut").appendChild(ptag);
     });
 }
 

@@ -11,14 +11,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-Notes</title>
     <script src="./main.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <p>
       Want to retrieve a note you saved? <a href="./get.html">Click here</a>
     </p>
-    <input id="name" type="text" autocomplete="off" /> <br />
+    <input
+      id="name"
+      type="text"
+      autocomplete="off"
+      placeholder="Name of note"
+    />
+    <br />
     <textarea id="input" autocomplete="off"></textarea><br />
-    <input id="password" type="password" autocomplete="off" /><br />
+    <input
+      id="password"
+      type="password"
+      autocomplete="off"
+      placeholder="Password for encrypting the note"
+    /><br />
     <button id="submit">Save note</button><br />
     <p id="main"></p>
   </body>

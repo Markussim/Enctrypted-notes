@@ -1,0 +1,18 @@
+input {
+  border: none;
+  background-color: gray;
+  padding: 5px;
+  border-radius: 5px;
+  /**/
+}
+
+* {
+  margin: 10px;
+  margin-left: 3px;
+}
+
+#noteText {
+    box-shadow: 0px 0px 10px black;
+    padding: 5px;
+    border-radius: 5px;
+}
