@@ -9,6 +9,8 @@ input {
 textarea {
   padding: 5px;
   width: 250px;
+  font-size: 20px;
+  text-align: left;
 }
 
 * {
@@ -24,4 +26,67 @@ textarea {
 
 #exists {
   color: red;
+}
+
+
+* {
+  font-size: 50px;
+  font-family: sans-serif;
+  text-align: center;
+  margin: auto;
+}
+
+#input {
+  width: 75%;
+  margin: 10px;
+}
+
+input {
+  width: 50%;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: black;
+  opacity: 0.5; /* Firefox */
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+  }
+  p {
+    color: black;
+  }
+  button {
+    border: solid black 2px;
+    background-color: white;
+    color: black;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+  }
+  p {
+    color: white;
+  }
+
+  div {
+    color: white;
+  }
+
+  button {
+    border: solid white 2px;
+    background-color: black;
+    color: white;
+  }
 }
